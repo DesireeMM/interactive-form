@@ -52,12 +52,28 @@ designSelect.addEventListener('change', () => {
     colorOptionDisplay(designSelect.value);
 });
 
-// adding cost display functionality to activities section
-activityFieldset.addEventListener('change', () => {
+// adding cost display and selection functionality to activities section
+activityFieldset.addEventListener('change', (evt) => {
     let totalCost = 0;
+    const dayAndTime = evt.target.getAttribute('data-day-and-time');
     for (let i = 0; i < activities.length; i++) {
-        if (activities[i].checked) {
+        const currentActivity = activities[i];
+        const parentLabel = currentActivity.parentNode;
+        const disabledParents = []
+        if (currentActivity.checked) {
             totalCost += parseInt(activities[i].dataset.cost);
+        }
+        if (currentActivity !== evt.target && currentActivity.getAttribute('data-day-and-time') === dayAndTime) {
+            parentLabel.classList.add('disabled');
+            disabledParents.push(parentLabel);
+        }
+        if (!evt.target.checked) {
+            for (let i = 0; i < disabledParents.length; i++) {
+                if (disabledParents[i].firstElementChild.getAttribute('data-day-and-time') === dayAndTime) {
+                    disabledParents[i].classList.remove('disabled');
+                    disabledParents.splice(i, 1);
+                }
+            }
         }
     }
     document.getElementById('activities-cost').innerText = `Total: $${totalCost}`;
