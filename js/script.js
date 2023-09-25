@@ -1,3 +1,4 @@
+// selected elements needed for later functionality
 const nameInput = document.getElementById('name');
 const jobSelect = document.getElementById('title');
 const otherJobField = document.getElementById('other-job-role');
@@ -51,7 +52,7 @@ designSelect.addEventListener('change', () => {
     colorOptionDisplay(designSelect.value);
 });
 
-// adding functionality to activities section
+// adding cost display functionality to activities section
 activityFieldset.addEventListener('change', () => {
     let totalCost = 0;
     for (let i = 0; i < activities.length; i++) {
@@ -67,7 +68,7 @@ paymentSelect.value = "credit-card";
 document.getElementById('paypal').style.display = 'none';
 document.getElementById('bitcoin').style.display = 'none';
 
-// update display for payment method
+// update display based on user payment method
 paymentSelect.addEventListener('change', () => {
     if (paymentSelect.value === 'paypal') {
         document.getElementById('paypal').style.display = 'block';
@@ -84,7 +85,7 @@ paymentSelect.addEventListener('change', () => {
     }
 });
 
-// validator functions
+// validator helper functions
 
 const isValidName = () => {
     const nameRegEx = /^[a-z]+$/;
@@ -152,3 +153,19 @@ form.addEventListener('submit', (evt) => {
         validator(cvvNumInput, isValidCVV);
     }
 });
+
+// adding event listeners to checkboxes
+const checkboxFocus = (checkbox) => {
+    checkbox.parentNode.classList.add('focus');
+}
+const checkboxBlur = (checkbox) => {
+    checkbox.parentNode.classList.remove('focus');
+}
+for (let i = 0; i < activities.length; i++) {
+    activities[i].addEventListener('focus', (evt) => {
+        checkboxFocus(evt.target);
+    });
+    activities[i].addEventListener('blur', (evt) => {
+        checkboxBlur(evt.target);
+    });
+}
