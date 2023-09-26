@@ -24,8 +24,8 @@ This project involved taking a template for a conference registration form and a
 - Job Role Section
   - Hid the "Other job role" input field unless user selects "Other".
 - T-Shirt Info Section
-  - Hid the color selection drop-down until needed.
-  - Only display appropriate color options based on user design choice.
+  - Disable the color selection drop-down until needed.
+  - Only enable appropriate color options based on user design choice.
 - Activites Section
   - Display appropriate total cost based on user selections.
   - Added focus and blur event handlers to increase accessibility.
