@@ -49,6 +49,7 @@ const colorOptionDisplay = (shirtDesign) => {
 // display color options based on design selection
 designSelect.addEventListener('change', () => {
     colorSelect.removeAttribute('disabled');
+    colorSelect.value = colorSelect.querySelector(`[data-theme='${designSelect.value}']`).value;
     colorOptionDisplay(designSelect.value);
 });
 
