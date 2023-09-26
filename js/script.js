@@ -187,57 +187,59 @@ for (let i = 0; i < activities.length; i++) {
 }
 
 // name input real-time validation
+// create HTML strings for hints and dynamically add them
 const capsHintP = '<p id="caps-hint" className="name-hint hint">Name cannot contain capital letters.</p>'
 const numsHintP = '<p id="nums-hint" className="name-hint hint">Name cannot contain digits.</p>'
 const nameParentLabel = nameInput.parentNode;
 nameParentLabel.insertAdjacentHTML('beforeend', capsHintP);
 nameParentLabel.insertAdjacentHTML('beforeend', numsHintP);
+// hide hints by default
 const capsHintEl = document.getElementById('caps-hint')
 capsHintEl.style.display = 'none';
 const numsHintEl = document.getElementById('nums-hint')
 numsHintEl.style.display = 'none';
 
+// validator functions to check user input
+/***
+ * function to check whether the user name input contains capital letters
+ * 
+ * @returns {boolean} - true if input has capitals
+ */
 const hasCapsValidator = () => {
     const capsRegEx = /[A-Z]+/;
-    return capsRegEx.test(nameInput);
+    return capsRegEx.test(nameInput.value);
 }
-
+/***
+ * function to check whether the user name input contains numbers
+ * 
+ * @returns {boolean} - true if input has numerals
+ */
 const hasNumsValidator = () => {
     const numsRegEx = /\d+/;
-    return numsRegEx.test(nameInput);
+    return numsRegEx.test(nameInput.value);
 }
 
+// update input field based on live user input
 nameInput.addEventListener('keyup', () => {
-    if (hasCapsValidator()) {
-        nameParentLabel.classList.add('valid');
-        nameParentLabel.classList.remove('not-valid')
-        capsHintEl.style.display = 'none';
-    } else {
+    if (hasCapsValidator() || hasNumsValidator()) {
         nameParentLabel.classList.add('not-valid');
         nameParentLabel.classList.remove('valid');
-        capsHintEl.style.display = 'inline';
+    } else {
+        nameParentLabel.classList.add('valid');
+        nameParentLabel.classList.remove('not-valid');
+        capsHintEl.style.display = 'none';
+    }
+    if (hasCapsValidator()) {
+        capsHintEl.style.display = 'block';
+    } else {
+        capsHintEl.style.display = 'none';
     }
     if (hasNumsValidator()) {
-        nameParentLabel.classList.add('valid');
-        nameParentLabel.classList.remove('not-valid')
-        numsHintEl.style.display = 'none';
+        numsHintEl.style.display = 'block';
     } else {
-        nameParentLabel.classList.add('not-valid');
-        nameParentLabel.classList.remove('valid');
-        numsHintEl.style.display = 'inline';
+        numsHintEl.style.display = 'none';
     }
-    // const nameValidator = (testElement, validatorFunction, hintEl) => {
-    //     if (validatorFunction()) {
-    //         testElement.closest('label').classList.add('valid');
-    //         testElement.closest('label').classList.remove('not-valid')
-    //         hintEl.style.display = 'none';
-    //     } else {
-    //         testElement.closest('label').classList.add('not-valid');
-    //         testElement.closest('label').classList.remove('valid');
-    //         hintEl.style.display = 'inline';
-    //     }
-    // }
-
-    // nameValidator(nameInput, noCapsValidator, capsHintEl);
-    // nameValidator(nameInput, noNumsValidator, numsHintEl);
+    if (!nameInput.value) {
+        nameParentLabel.classList.remove('valid');
+    }
 });
