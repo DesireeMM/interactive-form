@@ -2,7 +2,7 @@
 const nameInput = document.getElementById('name');
 const jobSelect = document.getElementById('title');
 const otherJobField = document.getElementById('other-job-role');
-const colorSelectDiv = document.getElementById('shirt-colors');
+const colorSelect = document.getElementById('color');
 const designSelect = document.getElementById('design');
 const activityFieldset = document.getElementById('activities');
 const activities = activityFieldset.querySelectorAll('input');
@@ -28,8 +28,8 @@ jobSelect.addEventListener('change', () => {
     }
 });
 
-//hide color select until necessaary
-colorSelectDiv.style.display = 'none';
+// disable color select until necessaary
+colorSelect.setAttribute('disabled', true);
 
 /***
  * Function to display/hide shirt color options
@@ -37,18 +37,18 @@ colorSelectDiv.style.display = 'none';
  * @param {string} shirtDesign - the user selected design
  */
 const colorOptionDisplay = (shirtDesign) => {
-    const shirtOptions = colorSelectDiv.querySelectorAll('option');
+    const shirtOptions = colorSelect.querySelectorAll('option');
     for (let i = 0; i < shirtOptions.length; i++) {
         if (shirtOptions[i].dataset.theme === shirtDesign) {
-            shirtOptions[i].style.display = 'block';
+            shirtOptions[i].removeAttribute('disabled');
         } else {
-            shirtOptions[i].style.display = 'none';
+            shirtOptions[i].setAttribute('disabled', true);
         }
     }
 }
 // display color options based on design selection
 designSelect.addEventListener('change', () => {
-    colorSelectDiv.style.display = 'block';
+    colorSelect.removeAttribute('disabled');
     colorOptionDisplay(designSelect.value);
 });
 
@@ -64,13 +64,16 @@ activityFieldset.addEventListener('change', (evt) => {
             totalCost += parseInt(activities[i].dataset.cost);
         }
         if (currentActivity !== evt.target && currentActivity.getAttribute('data-day-and-time') === dayAndTime) {
+            currentActivity.setAttribute('disabled', true)
             parentLabel.classList.add('disabled');
             disabledParents.push(parentLabel);
         }
         if (!evt.target.checked) {
             for (let i = 0; i < disabledParents.length; i++) {
-                if (disabledParents[i].firstElementChild.getAttribute('data-day-and-time') === dayAndTime) {
-                    disabledParents[i].classList.remove('disabled');
+                const currentParent = disabledParents[i]
+                if (currentParent.firstElementChild.getAttribute('data-day-and-time') === dayAndTime) {
+                    currentParent.firstElementChild.removeAttribute('disabled');
+                    currentParent.classList.remove('disabled');
                     disabledParents.splice(i, 1);
                 }
             }
