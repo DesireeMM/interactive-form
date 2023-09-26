@@ -11,11 +11,11 @@ Learn more about the developer on [LinkedIn](https://www.linkedin.com/in/desiree
 ## Project Information
 
 #### <a name="overview"></a>Description
-This project involved taking a template for a conference registration form and adding interactivity and validation.
+This project involved taking a template for a conference registration form and adding interactivity, as well as form validation.
 
 #### <a name="technologiesused"></a>Technologies Used
-- CSS (provided by Treehouse)
-- HTML (provided by Treehouse)
+- CSS (project file provided by Treehouse)
+- HTML (project file provided by Treehouse)
 - JavaScript
 
 #### <a name="addedfeatures"></a>Added Features
@@ -37,14 +37,14 @@ This project involved taking a template for a conference registration form and a
     - Name
     - Email
     - Activites (users must select at least one)
-    - Credit Card information (if this is user's payment type)
+    - Credit Card information (if this is the user's payment type)
       - Card number
       - Zip code
       - CVV
 - General
   - Added visual validation errors to user inputs.
 
-#### <a href="realtime"></a>Real Time Validation
+#### <a name="realtime"></a>Real Time Validation
 As an added challenge, I've added real time validation to the name input field.
 - If the user types a capital letter, a hint will display "Name cannot contain capital letters"
 - If the user types a digit, a hint will display "Name cannot contain digits"
